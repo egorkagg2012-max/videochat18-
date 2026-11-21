@@ -83,7 +83,20 @@ continueButton.addEventListener('click', () => {
   status.textContent = 'Проверка возраста ещё не подключена. Регистрация закрыта.'
 })
 
-async function 
+async function refreshAgeVerificationStatus() {
+  try {
+    const response = await fetch('/api/age-verification/status', { cache: 'no-store' })
+    const result = await response.json()
+    if (response.ok && result.available === true && result.accessGranted === true) {
+      status.textContent = 'Сервис проверки отвечает, но для входа всё равно нужна персональная проверка возраста.'
+      return
+    }
+    status.textContent = 'Серверная проверка возраста не настроена. Регистрация и видеочат закрыты.'
+  } catch {
+    status.textContent = 'Не удалось связаться с сервером проверки. Доступ закрыт.'
+  }
+}
+
 refreshAgeVerificationStatus()
 
 // Local-only device diagnostics. Media tracks are never sent to a peer or server.
@@ -168,18 +181,3 @@ deviceStart.addEventListener('click', async () => {
 
 deviceStop.addEventListener('click', stopDeviceCheck)
 window.addEventListener('pagehide', stopDeviceCheck)
- {
-  try {
-    const response = await fetch('/api/age-verification/status', { cache: 'no-store' })
-    const result = await response.json()
-    if (response.ok && result.available === true && result.accessGranted === true) {
-      status.textContent = 'Сервис проверки отвечает, но для входа всё равно нужна персональная проверка возраста.'
-      return
-    }
-    status.textContent = 'Серверная проверка возраста не настроена. Регистрация и видеочат закрыты.'
-  } catch {
-    status.textContent = 'Не удалось связаться с сервером проверки. Доступ закрыт.'
-  }
-}
-
-refreshAgeVerificationStatus()
