@@ -14,6 +14,7 @@ npm run dev
 - Russian-language 18+ onboarding / access-gate screen.
 - No face photos, identity documents, or biometric data are collected by this prototype.
 - Registration and matchmaking are intentionally unavailable.
+- A Vercel serverless status endpoint reports age assurance as unavailable and denies access by default.
 - No accounts, matchmaking, video transport, age-assurance provider, or moderation backend is connected.
 
 ## Required before any real launch
