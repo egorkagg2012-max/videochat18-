@@ -39,7 +39,7 @@ document.querySelector('#app').innerHTML = `
       <p class="status" id="status" role="status">Доступ не предоставляется, пока проверка возраста не подключена.</p>
     </section>
 
-    <section class="learn-link-panel"><p class="eyebrow">АНАТОМИЯ</p><h2>Узнай больше о строении тела</h2><p>Краткий образовательный справочник с медицинскими схемами и подписями.</p><a href="/anatomy.html">Открыть анатомический справочник ↗</a></section>
+    <section class="learn-link-panel"><p class="eyebrow">АНАТОМИЯ</p><h2>Узнай больше о строении тела</h2><p>Фотографические примеры наружной анатомии с медицинскими пояснениями.</p><a href="/anatomy.html">Открыть анатомический справочник ↗</a></section>
 
     <section class="safety-panel" aria-labelledby="safety-title">
       <p class="eyebrow">НАШИ ПРАВИЛА</p>
