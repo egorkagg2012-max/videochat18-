@@ -1,0 +1,10 @@
+{
+  "appId": "com.videochat18.app",
+  "appName": "VideoChat18",
+  "webDir": "dist",
+  "server": {
+    "url": "https://videochat18-8w1ug6kyy-raze-cup-tournaments.vercel.app",
+    "cleartext": false,
+    "androidScheme": "https"
+  }
+}
