@@ -17,7 +17,7 @@ document.querySelector('#app').innerHTML = `
       <div class="anatomy-heading"><span class="anatomy-number">01</span><div><p class="anatomy-kicker">ЖЕНСКАЯ АНАТОМИЯ</p><h2 id="female-title">Вульва</h2></div></div>
       <p class="anatomy-intro">Вульва — общее название наружных женских половых органов. На фотографии показана естественная вариативность внешнего строения.</p>
       <a class="medical-photo-link" href="https://commons.wikimedia.org/wiki/File:Human_female_vulva_closeup_33yo.jpg" target="_blank" rel="noopener noreferrer">
-        <img class="medical-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Human_female_vulva_closeup_33yo.jpg" alt="Фотографический пример наружной женской анатомии взрослой женщины" loading="lazy">
+        <img class="medical-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Human_female_vulva_closeup_33yo.jpg" referrerpolicy="no-referrer" alt="Фотографический пример наружной женской анатомии взрослой женщины" loading="lazy">
         <span>Открыть оригинал и сведения об источнике ↗</span>
       </a>
       <div class="anatomy-facts">
