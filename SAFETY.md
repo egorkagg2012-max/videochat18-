@@ -26,6 +26,10 @@ This is a launch-blocking checklist, not a claim that these controls are already
 - Define prohibited conduct and enforce it consistently. Never allow anyone under 18 to use the service.
 - Complete a jurisdiction-specific legal and privacy review before launch. The operator must confirm applicable age-assurance, privacy, consumer, and online-safety obligations.
 
+## Current implementation note
+
+`api/_lib/call-access-policy.js` is a server-only, fail-closed policy helper with unit tests. It expects trusted server-side records and must never receive age or consent claims directly from a browser request. It does not verify provider signatures, authenticate users, persist consent, or create calls; no production route currently invokes it. Treat it as a policy reference until those trusted services exist and are independently tested.
+
 ## Release gates
 
 A production launch is blocked until all of the following are tested end to end:
