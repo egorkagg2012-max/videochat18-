@@ -17,3 +17,26 @@
 .image-credit{font-size:11px;line-height:1.6;color:#8f8793;margin:15px 0 0}
 .image-credit a{color:#ff9fba}
 @media(max-width:480px){.photo-card{padding:16px}.photo-card .anatomy-facts{grid-template-columns:1fr}.medical-photo{max-height:460px}}
+
+.device-panel{margin-top:22px;padding:24px;background:#1a191f;border:1px solid #34313c;border-radius:20px}
+.device-panel h2{font-size:23px;margin:0 0 8px;letter-spacing:-.5px}
+.device-description{font-size:13px;line-height:1.65;color:#aaa5b2;margin:0 0 16px}
+.device-preview-wrap{position:relative;overflow:hidden;aspect-ratio:16/9;background:#09090b;border:1px solid #393440;border-radius:14px}
+.device-preview-wrap video{display:block;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.preview-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:18px;color:#aaa5b2}
+.preview-placeholder[hidden]{display:none}
+.preview-placeholder span{font-size:32px;color:#ff79a4}
+.preview-placeholder strong{font-size:14px;color:#f6f4f8}
+.preview-placeholder small{font-size:11px;line-height:1.5}
+.device-controls{display:flex;gap:10px;margin-top:14px}
+.device-controls button{flex:1;border:0;border-radius:11px;padding:13px 12px;font-size:13px;font-weight:800}
+.device-start{background:#ff6a9b;color:#1b1016;cursor:pointer}
+.device-stop{background:#302b35;color:#f6f4f8;cursor:pointer}
+.device-controls button:disabled{opacity:.42;cursor:not-allowed}
+.device-mic{margin-top:18px}
+.mic-heading{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:#c8c1cd;margin-bottom:9px}
+.mic-heading span:last-child{color:#ff9fba}
+.mic-track{height:9px;background:#302b35;border-radius:20px;overflow:hidden}
+.mic-track div{height:100%;width:0%;background:#ff6a9b;border-radius:20px;transition:width .08s linear}
+.device-status{font-size:12px;line-height:1.6;color:#aaa5b2;margin:12px 0 0;min-height:19px}
+@media(max-width:480px){.device-panel{padding:17px}.device-controls{flex-direction:column}}
