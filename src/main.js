@@ -53,6 +53,7 @@ document.querySelector('#app').innerHTML = `
       </div>
       <div class="device-mic"><div class="mic-heading"><span>Уровень микрофона</span><span id="mic-state">Не проверяется</span></div><div class="mic-track"><div id="mic-level"></div></div></div>
       <p class="device-status" id="device-status" role="status" aria-live="polite">Камера и микрофон не запущены.</p>
+      <p class="device-status" id="livekit-status" role="status" aria-live="polite">Проверяем настройки видеосвязи…</p>
     </section>
 
     <section class="learn-link-panel"><p class="eyebrow">АНАТОМИЯ</p><h2>Узнай больше о строении тела</h2><p>Фотографические примеры наружной анатомии с медицинскими пояснениями.</p><a href="/anatomy.html">Открыть анатомический справочник ↗</a></section>
@@ -181,3 +182,20 @@ deviceStart.addEventListener('click', async () => {
 
 deviceStop.addEventListener('click', stopDeviceCheck)
 window.addEventListener('pagehide', stopDeviceCheck)
+
+// This endpoint reports only whether server-side LiveKit settings exist.
+// It does not expose credentials or grant access to a room.
+async function refreshLiveKitStatus() {
+  const livekitStatus = document.querySelector('#livekit-status')
+  try {
+    const response = await fetch('/api/livekit/status', { cache: 'no-store' })
+    const result = await response.json()
+    livekitStatus.textContent = response.ok && result.configured === true
+      ? 'Серверные настройки видеосвязи добавлены. Звонки пока закрыты до подключения проверки 18+ и системы безопасности.'
+      : 'Настройки видеосвязи неполные. Проверь LIVEKIT_URL, LIVEKIT_API_KEY и LIVEKIT_API_SECRET в Vercel.'
+  } catch {
+    livekitStatus.textContent = 'Не удалось проверить настройки видеосвязи. Звонки остаются закрыты.'
+  }
+}
+
+refreshLiveKitStatus()
