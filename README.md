@@ -26,4 +26,4 @@ npm run dev
 5. Add privacy notices, secure authentication, incident handling, and jurisdiction-specific legal review.
 6. Keep all video and matching features disabled until age assurance and safety controls have been independently tested.
 
-This repository is a UI prototype, not a production-ready adult service.
+See [SAFETY.md](./SAFETY.md) for the release-blocking age assurance, consent, moderation, and privacy checklist.\n\nThis repository is a UI prototype, not a production-ready adult service.
