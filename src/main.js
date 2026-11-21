@@ -2,73 +2,52 @@ import './style.css'
 
 document.querySelector('#app').innerHTML = `
   <main class="shell">
-    <header class="top"><div class="logo">VC<span>18</span></div><span class="tag">ТОЛЬКО 18+</span></header>
+    <header class="top">
+      <a class="logo" href="/" aria-label="VC18 — главная">VC<span>18</span></a>
+      <span class="tag">ТОЛЬКО 18+</span>
+    </header>
+
     <section class="hero">
       <p class="eyebrow">ВИДЕОЧАТ ДЛЯ ВЗРОСЛЫХ</p>
       <h1>Общайся<br><span>без границ.</span></h1>
-      <p class="lead">Сначала подтвердим совершеннолетие. Данные проверки не будут отображаться другим пользователям.</p>
+      <p class="lead">Безопасность начинается до первого звонка. Доступ откроется только после надёжного подтверждения возраста.</p>
     </section>
+
     <section class="panel" aria-labelledby="verify-title">
       <div class="step">ШАГ 1 ИЗ 2</div>
-      <h2 id="verify-title">Подтверждение возраста</h2>
-      <p class="muted">Загрузи своё фото лица. Оно будет показано только в интерфейсе предварительного просмотра.</p>
-      <label class="upload" for="face-photo">
-        <span class="upload-icon">＋</span>
-        <strong>Выбрать фото лица</strong>
-        <small>JPG, PNG или WEBP · до 8 МБ</small>
-        <input id="face-photo" type="file" accept="image/jpeg,image/png,image/webp" />
-      </label>
-      <div id="preview-wrap" class="preview-wrap" hidden>
-        <img id="preview" alt="Предпросмотр выбранного фото" />
-        <button id="remove-photo" class="remove" type="button">Убрать фото</button>
+      <div class="status-icon" aria-hidden="true">🔒</div>
+      <h2 id="verify-title">Проверка 18+ пока недоступна</h2>
+      <p class="muted">Сервис ещё не подключил независимого провайдера проверки возраста. Поэтому регистрация и подбор собеседников временно закрыты.</p>
+
+      <div class="notice">
+        <strong>Почему нельзя просто загрузить селфи?</strong>
+        Фотография или автоматическая оценка возраста по лицу не доказывают совершеннолетие. Проверка должна выполняться специализированным сервисом с защитой от подмены личности.
       </div>
-      <p class="notice"><strong>Важно:</strong> загрузка фотографии сама по себе не подтверждает возраст. Перед открытием видеочата сервер должен проверить возраст через специализированного провайдера. Пока такая интеграция не подключена, доступ к подбору собеседников закрыт.</p>
-      <button class="primary" id="continue" disabled>Продолжить</button>
-      <p class="status" id="status" role="status">Выбери фотографию, чтобы увидеть предпросмотр.</p>
+
+      <div class="requirements">
+        <h3>Перед запуском мы должны обеспечить</h3>
+        <ul>
+          <li>Надёжную проверку возраста 18+ на стороне сервера</li>
+          <li>Защиту от фото, видео и других попыток обмана проверки</li>
+          <li>Понятное согласие перед любым видеозвонком</li>
+          <li>Кнопки блокировки и жалобы, а также модерацию</li>
+          <li>Защиту персональных данных и сроки их удаления</li>
+        </ul>
+      </div>
+
+      <button class="primary" id="continue" type="button" disabled>Регистрация временно закрыта</button>
+      <p class="status" id="status" role="status">Доступ не предоставляется, пока проверка возраста не подключена.</p>
     </section>
-    <footer>18+ · Не отправляй чужие фотографии. Фото не загружается на сервер в этой демонстрационной версии.</footer>
+
+    <footer>18+ · Не отправляй документы или фотографии через сторонние ссылки. Сейчас сайт не собирает и не загружает биометрические данные.</footer>
   </main>
 `
 
-const input = document.querySelector('#face-photo')
-const previewWrap = document.querySelector('#preview-wrap')
-const preview = document.querySelector('#preview')
-const status = document.querySelector('#status')
 const continueButton = document.querySelector('#continue')
-let previewUrl = null
+const status = document.querySelector('#status')
 
-input.addEventListener('change', () => {
-  const file = input.files?.[0]
-  continueButton.disabled = true
-  if (previewUrl) URL.revokeObjectURL(previewUrl)
-  previewUrl = null
-  if (!file) {
-    previewWrap.hidden = true
-    status.textContent = 'Выбери фотографию, чтобы увидеть предпросмотр.'
-    return
-  }
-  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 8 * 1024 * 1024) {
-    input.value = ''
-    previewWrap.hidden = true
-    status.textContent = 'Нужен JPG, PNG или WEBP размером до 8 МБ.'
-    return
-  }
-  previewUrl = URL.createObjectURL(file)
-  preview.src = previewUrl
-  previewWrap.hidden = false
-  status.textContent = 'Фото выбрано. Проверка возраста ещё не выполнена.'
-})
-
-document.querySelector('#remove-photo').addEventListener('click', () => {
-  if (previewUrl) URL.revokeObjectURL(previewUrl)
-  previewUrl = null
-  input.value = ''
-  preview.removeAttribute('src')
-  previewWrap.hidden = true
-  continueButton.disabled = true
-  status.textContent = 'Фото удалено из предпросмотра.'
-})
-
-window.addEventListener('beforeunload', () => {
-  if (previewUrl) URL.revokeObjectURL(previewUrl)
+// Access intentionally remains closed until a real server-side age-assurance
+// integration and the required safety controls are implemented.
+continueButton.addEventListener('click', () => {
+  status.textContent = 'Проверка возраста ещё не подключена. Регистрация закрыта.'
 })
