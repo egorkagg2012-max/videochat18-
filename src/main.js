@@ -199,3 +199,10 @@ async function refreshLiveKitStatus() {
 }
 
 refreshLiveKitStatus()
+
+// Progressive Web App install support. API responses are deliberately never cached.
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {})
+  })
+}
