@@ -39,6 +39,22 @@ document.querySelector('#app').innerHTML = `
       <p class="status" id="status" role="status">Доступ не предоставляется, пока проверка возраста не подключена.</p>
     </section>
 
+    <section class="device-panel" aria-labelledby="device-title">
+      <p class="eyebrow">ПОДГОТОВКА УСТРОЙСТВА</p>
+      <h2 id="device-title">Проверь камеру и микрофон</h2>
+      <p class="device-description">Локальная проверка: изображение и звук остаются в этом браузере и никуда не отправляются. Это ещё не подключение к собеседнику.</p>
+      <div class="device-preview-wrap">
+        <video id="local-preview" autoplay playsinline muted aria-label="Локальное изображение с камеры"></video>
+        <div class="preview-placeholder" id="preview-placeholder"><span aria-hidden="true">◉</span><strong>Камера выключена</strong><small>Нажми «Включить проверку», чтобы проверить изображение</small></div>
+      </div>
+      <div class="device-controls">
+        <button class="device-start" id="device-start" type="button">Включить проверку</button>
+        <button class="device-stop" id="device-stop" type="button" disabled>Выключить</button>
+      </div>
+      <div class="device-mic"><div class="mic-heading"><span>Уровень микрофона</span><span id="mic-state">Не проверяется</span></div><div class="mic-track"><div id="mic-level"></div></div></div>
+      <p class="device-status" id="device-status" role="status" aria-live="polite">Камера и микрофон не запущены.</p>
+    </section>
+
     <section class="learn-link-panel"><p class="eyebrow">АНАТОМИЯ</p><h2>Узнай больше о строении тела</h2><p>Фотографические примеры наружной анатомии с медицинскими пояснениями.</p><a href="/anatomy.html">Открыть анатомический справочник ↗</a></section>
 
     <section class="safety-panel" aria-labelledby="safety-title">
@@ -67,7 +83,92 @@ continueButton.addEventListener('click', () => {
   status.textContent = 'Проверка возраста ещё не подключена. Регистрация закрыта.'
 })
 
-async function refreshAgeVerificationStatus() {
+async function 
+refreshAgeVerificationStatus()
+
+// Local-only device diagnostics. Media tracks are never sent to a peer or server.
+const deviceStart = document.querySelector('#device-start')
+const deviceStop = document.querySelector('#device-stop')
+const localPreview = document.querySelector('#local-preview')
+const previewPlaceholder = document.querySelector('#preview-placeholder')
+const deviceStatus = document.querySelector('#device-status')
+const micState = document.querySelector('#mic-state')
+const micLevel = document.querySelector('#mic-level')
+let localStream = null
+let audioContext = null
+let meterFrame = 0
+
+function stopDeviceCheck() {
+  if (meterFrame) cancelAnimationFrame(meterFrame)
+  meterFrame = 0
+  if (localStream) localStream.getTracks().forEach(track => track.stop())
+  localStream = null
+  localPreview.srcObject = null
+  if (audioContext && audioContext.state !== 'closed') audioContext.close().catch(() => {})
+  audioContext = null
+  micLevel.style.width = '0%'
+  micState.textContent = 'Не проверяется'
+  previewPlaceholder.hidden = false
+  deviceStart.disabled = false
+  deviceStop.disabled = true
+  deviceStatus.textContent = 'Проверка остановлена. Камера и микрофон выключены.'
+}
+
+deviceStart.addEventListener('click', async () => {
+  deviceStart.disabled = true
+  deviceStatus.textContent = 'Запрашиваем разрешение на камеру и микрофон…'
+  try {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      throw new Error('Браузер не поддерживает доступ к камере. Открой сайт по HTTPS в современном браузере.')
+    }
+    localStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'user' },
+      audio: { echoCancellation: true, noiseSuppression: true }
+    })
+    localPreview.srcObject = localStream
+    previewPlaceholder.hidden = true
+    deviceStop.disabled = false
+    deviceStatus.textContent = 'Камера работает. Говори, чтобы проверить уровень микрофона.'
+    micState.textContent = 'Микрофон включён'
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext
+    if (AudioContextClass) {
+      audioContext = new AudioContextClass()
+      if (audioContext.state === 'suspended') await audioContext.resume()
+      const source = audioContext.createMediaStreamSource(localStream)
+      const analyser = audioContext.createAnalyser()
+      analyser.fftSize = 512
+      source.connect(analyser)
+      const samples = new Uint8Array(analyser.fftSize)
+      const updateMeter = () => {
+        analyser.getByteTimeDomainData(samples)
+        let sum = 0
+        for (const sample of samples) {
+          const value = (sample - 128) / 128
+          sum += value * value
+        }
+        const rms = Math.sqrt(sum / samples.length)
+        micLevel.style.width = Math.min(100, Math.round(rms * 300)) + '%'
+        meterFrame = requestAnimationFrame(updateMeter)
+      }
+      updateMeter()
+    } else {
+      micState.textContent = 'Измеритель не поддерживается'
+    }
+  } catch (error) {
+    stopDeviceCheck()
+    const messages = {
+      NotAllowedError: 'Доступ запрещён. Разреши камеру и микрофон в настройках браузера.',
+      NotFoundError: 'Камера или микрофон не найдены на этом устройстве.',
+      NotReadableError: 'Устройство уже используется другим приложением.',
+      OverconstrainedError: 'Камера не поддерживает запрошенный режим.'
+    }
+    deviceStatus.textContent = messages[error.name] || error.message || 'Не удалось запустить проверку устройства.'
+  }
+})
+
+deviceStop.addEventListener('click', stopDeviceCheck)
+window.addEventListener('pagehide', stopDeviceCheck)
+ {
   try {
     const response = await fetch('/api/age-verification/status', { cache: 'no-store' })
     const result = await response.json()
