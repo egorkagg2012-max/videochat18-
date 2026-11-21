@@ -1,6 +1,6 @@
 # VideoChat18
 
-Starter frontend for an adults-only video-chat service.
+Starter frontend for a proposed adults-only video-chat service.
 
 ## Run locally
 
@@ -11,15 +11,18 @@ npm run dev
 
 ## Current status
 
-- Russian-language onboarding screen.
-- Local photo selection and preview (the image is not uploaded anywhere).
-- No matchmaking, video transport, accounts, or age verification provider is connected.
-- The continue button remains disabled by design.
+- Russian-language 18+ onboarding / access-gate screen.
+- No face photos, identity documents, or biometric data are collected by this prototype.
+- Registration and matchmaking are intentionally unavailable.
+- No accounts, matchmaking, video transport, age-assurance provider, or moderation backend is connected.
 
 ## Required before any real launch
 
-A photo upload or face-age estimate alone is not reliable proof that a person is 18+. Integrate a reputable age-assurance provider with liveness / anti-spoofing and a clear pass/fail result before granting access. Do not store raw face images unless strictly necessary; document purpose, retention, deletion, security, and consent. Add human review and an appeal path for uncertain results.
-
-Also implement server-side access enforcement, reporting/blocking, active moderation, rate limits, privacy and safety controls, and jurisdiction-specific legal review. Never trust a client-side age flag.
+1. Integrate a reputable age-assurance provider. Use server-verified results, liveness / anti-spoofing, and a clear fail-closed policy. A selfie or face-age estimate alone is not proof of age.
+2. Enforce access on the server. Never trust a client-side age flag or a browser-only check.
+3. Minimize sensitive data. Avoid retaining raw face images or identity documents unless strictly necessary; define purpose, retention, deletion, security, and consent.
+4. Provide clear, revocable consent before calls, plus block/report controls, active moderation, abuse response, and rate limits.
+5. Add privacy notices, secure authentication, incident handling, and jurisdiction-specific legal review.
+6. Keep all video and matching features disabled until age assurance and safety controls have been independently tested.
 
 This repository is a UI prototype, not a production-ready adult service.
