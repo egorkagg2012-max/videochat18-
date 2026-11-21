@@ -7,6 +7,7 @@ Starter frontend for a proposed adults-only video-chat service.
 ```bash
 npm install
 npm run dev
+npm test
 ```
 
 ## Current status
@@ -15,6 +16,7 @@ npm run dev
 - No face photos, identity documents, or biometric data are collected by this prototype.
 - Registration and matchmaking are intentionally unavailable.
 - A Vercel serverless status endpoint reports age assurance as unavailable and denies access by default.
+- A server-only call-eligibility policy helper documents the required age, consent, and moderation checks; it is not wired to authentication, storage, or call creation.
 - No accounts, matchmaking, video transport, age-assurance provider, or moderation backend is connected.
 
 ## Required before any real launch
