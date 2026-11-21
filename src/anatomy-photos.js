@@ -16,8 +16,8 @@ document.querySelector('#app').innerHTML = `
     <section class="photo-card" aria-labelledby="female-title">
       <div class="anatomy-heading"><span class="anatomy-number">01</span><div><p class="anatomy-kicker">ЖЕНСКАЯ АНАТОМИЯ</p><h2 id="female-title">Вульва</h2></div></div>
       <p class="anatomy-intro">Вульва — общее название наружных женских половых органов. На фотографии показана естественная вариативность внешнего строения.</p>
-      <a class="medical-photo-link" href="https://commons.wikimedia.org/wiki/File:Human_female_vulva_closeup_33yo.jpg" target="_blank" rel="noopener noreferrer">
-        <img class="medical-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Human_female_vulva_closeup_33yo.jpg" referrerpolicy="no-referrer" alt="Фотографический пример наружной женской анатомии взрослой женщины" loading="lazy">
+      <a class="medical-photo-link" href="https://commons.wikimedia.org/wiki/File:Image_of_a_Woman%27s_Vulva.jpg" target="_blank" rel="noopener noreferrer">
+        <img class="medical-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Image_of_a_Woman%27s_Vulva.jpg" referrerpolicy="no-referrer" alt="Фотографический пример наружной женской анатомии взрослой женщины" loading="lazy">
         <span>Открыть оригинал и сведения об источнике ↗</span>
       </a>
       <div class="anatomy-facts">
@@ -25,7 +25,7 @@ document.querySelector('#app').innerHTML = `
         <article><h3>Клитор</h3><p>Чувствительный орган; видимая часть — лишь небольшая часть его внутренней структуры.</p></article>
         <article><h3>Уретра и вход во влагалище</h3><p>Отверстие уретры служит для выведения мочи; вход во влагалище расположен ниже него.</p></article>
       </div>
-      <p class="image-credit">Источник: Barsktheory, Wikimedia Commons · CC0 1.0 · <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">условия CC0</a>. В описании файла указано, что модель — 33-летняя женщина.</p>
+      <p class="image-credit">Источник: Lezlie Rewatch, Wikimedia Commons · CC0 1.0 · <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">условия CC0</a>. В описании файла автор указывает, что модель — женщина в возрасте около 25 лет.</p>
     </section>
 
     <section class="photo-card" aria-labelledby="male-title">
